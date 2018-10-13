@@ -5,7 +5,7 @@ import base64
 from datetime import datetime
 import sys
 
-#1=Access Key ID, 2=SecretKey, 3=URL
+#1=Access Key ID, 2=SecretKey, 3=Associate Tag
 accessKeyID = sys.argv[1]
 secretKey = sys.argv[2]
 associateTag = sys.argv[3]
