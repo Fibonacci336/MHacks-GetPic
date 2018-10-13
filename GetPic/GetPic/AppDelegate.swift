@@ -12,12 +12,42 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var googleAPIKey = "AIzaSyA_32pBGPo7hA44gaUwWxA5FDWGAj8gvBM"
+    var googleURL: URL {
+        return URL(string: "https://vision.googleapis.com/v1/images:annotate?key=\(googleAPIKey)")!
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }
+    
+    func base64EncodeImage(_ image: UIImage) -> String {
+        guard var imagePNGData = image.pngData() else{
+            return ""
+        }
+        
+        // Resize the image if it exceeds the 2MB API limit
+        if (imagePNGData.count > 2097152) {
+            let oldSize: CGSize = image.size
+            let newSize: CGSize = CGSize(width: 800, height: oldSize.height / oldSize.width * 800)
+            imagePNGData = resizeImage(newSize, image: image)
+        }
+        
+        return imagePNGData.base64EncodedString(options: .endLineWithCarriageReturn)
+    }
+    
+    func resizeImage(_ imageSize: CGSize, image: UIImage) -> Data {
+        UIGraphicsBeginImageContext(imageSize)
+        image.draw(in: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        let resizedImage = newImage!.pngData()
+        UIGraphicsEndImageContext()
+        return resizedImage!
+    }
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
