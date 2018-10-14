@@ -1,6 +1,0 @@
-framework module Pods_GetPicUITests {
-  umbrella header "Pods-GetPicUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -7,47 +7,120 @@
 //
 
 import UIKit
+import Clarifai_Apple_SDK
+
+extension CGImagePropertyOrientation {
+    init(_ uiImageOrientation: UIImage.Orientation) {
+        switch uiImageOrientation {
+        case .up: self = .up
+        case .down: self = .down
+        case .left: self = .left
+        case .right: self = .right
+        case .upMirrored: self = .upMirrored
+        case .downMirrored: self = .downMirrored
+        case .leftMirrored: self = .leftMirrored
+        case .rightMirrored: self = .rightMirrored
+        }
+    }
+}
+
+extension CALayer {
+    
+    func addBorder(corner: UIRectCorner, cornerLength : CGFloat, color: UIColor, thickness: CGFloat) {
+        
+        
+        let border1 = CALayer()
+        let border2 = CALayer()
+        
+        switch corner {
+            case .topLeft:
+                //TOP
+                border1.frame = CGRect(x: 0, y: 0, width: cornerLength, height: thickness)
+                //LEFT
+                border2.frame = CGRect(x: 0, y: 0, width: thickness, height: cornerLength)
+                break
+            case .topRight:
+                //TOP
+                border1.frame = CGRect(x: frame.width-cornerLength, y: 0, width: cornerLength, height: thickness)
+                //RIGHT
+                border2.frame = CGRect(x: frame.width-thickness, y: 0, width: thickness, height: cornerLength)
+                break
+            case .bottomLeft:
+                //BOTTOM
+                border1.frame = CGRect(x: 0, y: frame.height-thickness, width: cornerLength, height: thickness)
+                //LEFT
+                border2.frame = CGRect(x: 0, y: frame.height-cornerLength, width: thickness, height: cornerLength)
+                break
+            case .bottomRight:
+                //BOTTOM
+                border1.frame = CGRect(x: frame.width-cornerLength, y: frame.height-thickness, width: cornerLength, height: thickness)
+                //RIGHT
+                border2.frame = CGRect(x: frame.width-thickness, y: frame.height-cornerLength, width: thickness, height: cornerLength)
+                break
+            case .allCorners:
+                addBorder(corner: .topLeft, cornerLength: cornerLength, color: color, thickness: thickness)
+                addBorder(corner: .topRight, cornerLength: cornerLength, color: color, thickness: thickness)
+                addBorder(corner: .bottomLeft, cornerLength: cornerLength, color: color, thickness: thickness)
+                addBorder(corner: .bottomRight, cornerLength: cornerLength, color: color, thickness: thickness)
+                break
+            default:
+                break
+        }
+        
+        if corner != .allCorners{
+            border1.backgroundColor = color.cgColor;
+            border2.backgroundColor = color.cgColor;
+            addSublayer(border1)
+            addSublayer(border2)
+        }
+    }
+}
+
+
+extension DispatchQueue {
+    class func mainSyncSafe(execute work: () -> Void) {
+        if Thread.isMainThread {
+            work()
+        } else {
+            DispatchQueue.main.sync(execute: work)
+        }
+    }
+    
+    class func mainAsyncSafe(execute work: @escaping () -> Void) {
+        if Thread.isMainThread {
+            work()
+        } else {
+            DispatchQueue.main.async(execute: work)
+        }
+    }
+    
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var googleAPIKey = "AIzaSyA_32pBGPo7hA44gaUwWxA5FDWGAj8gvBM"
-    var googleURL: URL {
-        return URL(string: "https://vision.googleapis.com/v1/images:annotate?key=\(googleAPIKey)")!
-    }
-
+    let clarifaiAPIKey = "36c24af7c5e94d6b975e5b2a2c39d96e"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        Clarifai.sharedInstance().start(apiKey: clarifaiAPIKey)
+        
         // Override point for customization after application launch.
         return true
     }
     
-    func base64EncodeImage(_ image: UIImage) -> String {
-        guard var imagePNGData = image.pngData() else{
-            return ""
-        }
+    func createSeperatedString(array : [String], seperator : String = ",") -> String{
         
-        // Resize the image if it exceeds the 2MB API limit
-        if (imagePNGData.count > 2097152) {
-            let oldSize: CGSize = image.size
-            let newSize: CGSize = CGSize(width: 800, height: oldSize.height / oldSize.width * 800)
-            imagePNGData = resizeImage(newSize, image: image)
-        }
-        
-        return imagePNGData.base64EncodedString(options: .endLineWithCarriageReturn)
+        let description = array.reduce("", { (result, next) -> String in
+            if result != ""{
+                return (result + seperator + next)
+            }
+            return next
+        })
+        return description
     }
-    
-    func resizeImage(_ imageSize: CGSize, image: UIImage) -> Data {
-        UIGraphicsBeginImageContext(imageSize)
-        image.draw(in: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        let resizedImage = newImage!.pngData()
-        UIGraphicsEndImageContext()
-        return resizedImage!
-    }
-    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

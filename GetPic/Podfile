@@ -1,12 +1,14 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '12.0'
 
 target 'GetPic' do
+  platform :ios, '11.0'
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for GetPic
+  pod 'Clarifai-Apple-SDK', '3.0.0-beta10'
   pod 'SwiftyJSON'
+  pod 'SwiftOCR'
 
   target 'GetPicTests' do
     inherit! :search_paths

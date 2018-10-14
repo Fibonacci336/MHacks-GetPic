@@ -1,16 +1,28 @@
 PODS:
+  - Clarifai-Apple-SDK (3.0.0-beta10)
+  - GPUImage (0.1.7)
+  - SwiftOCR (1.1):
+    - GPUImage
   - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
+  - Clarifai-Apple-SDK (= 3.0.0-beta10)
+  - SwiftOCR
   - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Clarifai-Apple-SDK
+    - GPUImage
+    - SwiftOCR
     - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Clarifai-Apple-SDK: 8525a151e6c00d7dc446d9319dcb4edfb445a33b
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  SwiftOCR: e1a5c7582f074b54df2b1ad273983088b3cf5d45
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: b7496267db796a335fd2800f87d14dfc31b1a663
+PODFILE CHECKSUM: be431b20339b0246f0242c9778fa29d513726527
 
 COCOAPODS: 1.5.3

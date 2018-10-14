@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
+        <deployment version="4352" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -54,9 +54,9 @@
         <!--Item Detail View Controller-->
         <scene sceneID="eCR-H8-nVS">
             <objects>
-                <viewController id="pgu-iY-t6w" customClass="ItemDetailViewController" customModule="GetPic" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="itemDetailVC" id="pgu-iY-t6w" customClass="ItemDetailViewController" customModule="GetPic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="20N-I9-iED">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="550"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dln-uL-XfB">
@@ -71,7 +71,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3c-yh-aQa">
-                                <rect key="frame" x="96" y="500" width="109" height="30"/>
+                                <rect key="frame" x="96" y="450" width="109" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Show More"/>
                                 <connections>
@@ -97,7 +97,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="tb9-WA-i7b"/>
                     </view>
-                    <size key="freeformSize" width="300" height="550"/>
+                    <size key="freeformSize" width="300" height="500"/>
                     <connections>
                         <outlet property="itemDescription" destination="KUo-jG-ovp" id="nSd-9x-ciw"/>
                         <outlet property="itemImageView" destination="dln-uL-XfB" id="gNp-7H-bqu"/>
@@ -107,6 +107,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X6r-uL-IAm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1156.8" y="142.1289355322339"/>
+        </scene>
+        <!--Item Detail Web View Controller-->
+        <scene sceneID="zsL-vP-zDT">
+            <objects>
+                <viewController storyboardIdentifier="itemDetailWebVC" id="Vq9-2N-KTS" customClass="ItemDetailWebViewController" customModule="GetPic" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Soz-CU-kE3">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="500"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tDI-CQ-eio">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="500"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rM8-ic-yz1">
+                                <rect key="frame" x="140" y="240" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" cocoaTouchSystemColor="darkTextColor"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="DuJ-D4-hTu"/>
+                    </view>
+                    <size key="freeformSize" width="300" height="500"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="rM8-ic-yz1" id="BRh-4S-rGz"/>
+                        <outlet property="webView" destination="tDI-CQ-eio" id="eRZ-ym-Rfi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o8j-0X-J20" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1785.5999999999999" y="141.22938530734635"/>
         </scene>
     </scenes>
 </document>
